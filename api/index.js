@@ -18,11 +18,16 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
+const { conn, Diet } = require('./src/db.js');
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
+    const dietas = ["Gluten Free","Ketogenic","Vegetarian","Lacto-Vegetarian",
+    "Ovo-Vegetarian","Vegan","Pescetarian","Paleo", "Primal","Low FODMAP","Whole30",]
+    // crear dietas en la base de datos
+      for (let i = 0; i < dietas.length; i++){
+      Diet.create({name: dietas[i] }) }
   });
 });
