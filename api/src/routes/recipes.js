@@ -2,7 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const axios = require('axios');
 const {Recipe, Diet} = require('../db.js');
-const {Op} = require('sequelize');
+const {Op, where} = require('sequelize');
 const {
   API_KEY,
 } = process.env;
@@ -13,16 +13,38 @@ const {
 router.get("/", async (req, res, next) => {
   const{name} = req.query;
     try{
-        const receta = await axios.get("https://api.spoonacular.com/recipes/complexSearch?number=2&query="+name+"&apiKey="+API_KEY)
-        const recetasApi =(receta.data.results)
+        const receta = await axios.get("https://api.spoonacular.com/recipes/complexSearch?number=100&addRecipeInformation=true&query="+name+"&apiKey="+API_KEY)
+        const recetasApiNombre =(receta.data.results)
+        const arrayApiCustomNombre = recetasApiNombre.map(recipe => recipe = {
+          source: "https://api.spoonacular.com/recipes/",
+          id: recipe.id,
+          name: recipe.title,
+          image: recipe.image,
+          imageType: recipe.imageType,        
+          diets: recipe.diets,
+          score: recipe.spoonacularScore,
+          healthScore: recipe.healthScore,              
+        })
         const recetasDB = await Recipe.findAll({
           where:{
             name : {
               [Op.iLike]: "%"+ name +"%"
             }
+          },
+          include: {
+            model: Diet,
+            attributes: ["id", "name"],
+            through:{
+              attributes: []
+            }
           }
-        })
-        const recetas = [...recetasApi,...recetasDB]
+        }) 
+        const recetasDbCustom = recetasDB.map(recipe => recipe = {
+          ...recipe.dataValues,
+          diets:recipe.dataValues.diets.map(diet => diet =
+          diet.name
+        )}) 
+        const recetas = [...arrayApiCustomNombre,...recetasDbCustom]
       if (name && recetas.length){
         return res.send(recetas)
       }     
@@ -30,9 +52,33 @@ router.get("/", async (req, res, next) => {
         return res.status(404).send("no hay recestas con este ?name = "+name)
       }
       else {
-        const allRecipes = await axios.get("https://api.spoonacular.com/recipes/complexSearch?number=2&apiKey="+API_KEY)
+        const allRecipes = await axios.get("https://api.spoonacular.com/recipes/complexSearch?number=100&addRecipeInformation=true&apiKey="+API_KEY)
         const allRecipesInArray = allRecipes.data.results
-        return res.send(allRecipesInArray)
+        const arrayApiCustom = allRecipesInArray.map(recipe => recipe = {
+          source: "https://api.spoonacular.com/recipes/",
+          id: recipe.id,
+          name: recipe.title,
+          image: recipe.image,
+          imageType: recipe.imageType,        
+          diets: recipe.diets,
+          score: recipe.spoonacularScore,
+          healthScore: recipe.healthScore,              
+        })
+        const recipesDbDefault = await Recipe.findAll({
+          include: {
+            model: Diet,
+            attributes: ["id", "name"],
+            through:{
+              attributes: []
+            }
+          }})
+          const recipesDbCustom = recipesDbDefault.map(recipe => recipe = {
+            ...recipe.dataValues,
+            diets:recipe.dataValues.diets.map(diet => diet =
+            diet.name
+          )})        
+        const recipesDefault = [...arrayApiCustom,...recipesDbCustom]
+        return res.send(recipesDefault)
       }
     }catch(err){
       next(err);
@@ -46,7 +92,7 @@ router.get("/:idReceta", async (req, res, next) => {
   const{idReceta} = req.params;
     try{
       if (idReceta && idReceta.length <= 7){      
-        const detail = await axios.get("https://api.spoonacular.com/recipes/"+idReceta+"/information?includeNutrition=false&apiKey=880cf0e63ea24415abdbfa6aab1b7b8a") 
+        const detail = await axios.get("https://api.spoonacular.com/recipes/"+idReceta+"/information?includeNutrition=false&apiKey="+API_KEY) 
         const filterDetail = {
           source: "https://api.spoonacular.com/recipes/",
           id: detail.data.id,
@@ -70,10 +116,15 @@ router.get("/:idReceta", async (req, res, next) => {
             through:{
               attributes: []
             }
-          }})
+          }}
+        )
+        const detailDbCustom = {
+          ...detailDb.dataValues,
+          diets:detailDb.dataValues.diets.map(diet => diet =
+          diet.name
+        )}
         if (detailDb){
-          detailDb.source = "base de datos food"
-          return res.send(detailDb)
+          return res.send(detailDbCustom)
         }
         else {
           return res.status(404).send("no existe esta /:idReceta --> "+idReceta)

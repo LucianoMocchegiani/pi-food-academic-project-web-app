@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     summary: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     score: {
@@ -25,7 +25,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
     },
     instructions: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     source:{
     type: DataTypes.VIRTUAL,

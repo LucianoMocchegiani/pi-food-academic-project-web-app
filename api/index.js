@@ -24,10 +24,11 @@ const { conn, Diet } = require('./src/db.js');
 conn.sync({ force: true }).then(() => {
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
-    const dietas = ["Gluten Free","Ketogenic","Vegetarian","Lacto-Vegetarian",
-    "Ovo-Vegetarian","Vegan","Pescetarian","Paleo", "Primal","Low FODMAP","Whole30",]
+    const dietas = ["gluten free","ketogenic","vegetarian","lacto ovo vegetarian",
+    "vegan","pescatarian","paleolithic", "primal","fodmap friendly","whole 30","dairy free"]
     // crear dietas en la base de datos
       for (let i = 0; i < dietas.length; i++){
       Diet.create({name: dietas[i] }) }
   });
 });
+
