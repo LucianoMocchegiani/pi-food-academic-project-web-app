@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux"
 import {useEffect, useState,} from "react"
-import {orderBy, getByFind} from '../store/actions'
+import {orderBy, getByFind, resetError} from '../store/actions'
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 
@@ -37,8 +37,18 @@ export default function SelectBar(){
     let newArrayObj = [...arrayObj]
     return newArrayObj
   }
+  const [orderPress, setOrderPress] = useState({healthScore:"",name:""});
+  const changeOrder = (atribute,value,orderFunction)=>{
+    dispatch(orderBy(orderFunction(recipes,atribute)))
+    setOrderPress({
+      ...orderPress,
+      healthScore:"",name:"",
+      [atribute]:value
+    })
+  }
   ////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////Find By Name////////////////////////////////////////////////
+  const error = useSelector(state => state.error)
   const [input, setInput] = useState({find:""});
   const handleInputChange = function(e){
     setInput({
@@ -47,30 +57,44 @@ export default function SelectBar(){
     });
   }
   const find=()=>{
+    dispatch(resetError())
     dispatch(getByFind(input.find))
     setInput({
       ...input,
       find : ""
     });
   }
+ 
   ////////////////////////////////////////////////////////////////////////////////////////////////
   return( 
     <div>
        <div className="order-right">
-        <button className="button-a"><NavLink className="link"to="/new" >Create new recipe</NavLink></button>
+       <NavLink className="link"to="/home/new"><button className="button-a">Create new recipe</button></NavLink>
         <button className="button-a"onClick = {()=>find()}>Find Recipe</button>
-        <input className="input-a"type="text" name="name" value={input.find} onChange={(e)=>handleInputChange(e)}/>
+        {error[1]==="Error Find"&&<p id="find-not-found">No results were found for your search.</p>}
+        {error[1]==="Error Find"&& !!setTimeout(() => {dispatch(resetError())}, 4000)}
+        <input className="input-a"type="text" name="name" value={input.find} onChange={(e)=>handleInputChange(e)} placeholder="Search recipes..."/>
       </div>
         <div className="order-left">
           <label className="label">Order by HealthScore:</label>
-          <button className="button-a"onClick = {()=>dispatch(orderBy(Desc(recipes,"healthScore")))}>Highest</button>
-          <button className="button-a"onClick = {()=>dispatch(orderBy(Asc(recipes,"healthScore")))}>Lowest</button>
-        </div>
+          {orderPress.healthScore === "Desc"&&<button className="button-a press-button"onClick = {()=>changeOrder("healthScore","Desc",Desc)}>Highest</button>}
+          {orderPress.healthScore === "Desc"&&<button className="button-a"onClick = {()=>changeOrder("healthScore","Asc",Asc)}>Lowest</button>}
+          {orderPress.healthScore === "Asc"&&<button className="button-a"onClick = {()=>changeOrder("healthScore","Desc",Desc)}>Highest</button>}
+          {orderPress.healthScore === "Asc"&&<button className="button-a press-button"onClick = {()=>changeOrder("healthScore","Asc",Asc)}>Lowest</button>}
+          {orderPress.healthScore === ""&&<button className="button-a"onClick = {()=>changeOrder("healthScore","Desc",Desc)}>Highest</button>}
+          {orderPress.healthScore === ""&&<button className="button-a"onClick = {()=>changeOrder("healthScore","Asc",Asc)}>Lowest</button>}
+        </div>                                       
         <div className="order-left">
           <label className="label">Order by Name:</label>
-          <button className="button-a"onClick = {()=>dispatch(orderBy(Desc(recipes,"name")))}>Z-A</button>
-          <button className="button-a"onClick = {()=>dispatch(orderBy(Asc(recipes,"name")))}>A-Z</button>         
+          {orderPress.name === "Desc"&& <button className="button-a press-button"onClick = {()=>changeOrder("name","Desc",Desc)}>Z-A</button>}
+          {orderPress.name === "Desc"&& <button className="button-a"onClick = {()=>changeOrder("name","Asc",Asc)}>A-Z</button>}
+          {orderPress.name === "Asc"&& <button className="button-a"onClick = {()=>changeOrder("name","Desc",Desc)}>Z-A</button>}
+          {orderPress.name === "Asc"&& <button className="button-a press-button"onClick = {()=>changeOrder("name","Asc",Asc)}>A-Z</button>}
+          {orderPress.name === ""&&<button className="button-a"onClick = {()=>changeOrder("name","Desc",Desc)}>Z-A</button>}
+          {orderPress.name === ""&&<button className="button-a"onClick = {()=>changeOrder("name","Asc",Asc)}>A-Z</button>}
         </div>        
     </div>
   )
 }
+
+// {!!error.length&& setTimeout(() => {dispatch(resetError())}, 3000)}

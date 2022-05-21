@@ -4,6 +4,8 @@ import {useEffect} from "react"
 import {getRecipes, getDiets} from '../store/actions'
 import CardRecipe from '../components/cardRecipe'
 import SelectBar from '../components/selectBar'
+import Loading from '../components/loading'
+import NotFoundError from '../components/404'
 import '../css/recipes.css';
 
 
@@ -44,8 +46,10 @@ export default function Recipes(){
       for (let i = 1; i < totalPages+1; i++){
         totalPagesArray.push(i)
       }
-      totalPagesArray.unshift("Previous")
-      totalPagesArray.push("Next")
+      if(totalPagesArray.length>1){
+        totalPagesArray.unshift("Previous")
+        totalPagesArray.push("Next")
+      }
       return totalPagesArray
     }
     ///////////////////////Funcion Paginadora///////////////////////////////////////////
@@ -70,7 +74,7 @@ export default function Recipes(){
           actualyPage: [...arrayRecipes]
         });
       }
-      if(pag === "anterior"){
+      if(pag === "Previous"){
         if(recipesPage.page < 2){
           pag = 1
           changePages()
@@ -79,7 +83,7 @@ export default function Recipes(){
           pag = recipesPage.page-1
           changePages()
         }
-      }else if(pag === "siguiente"){
+      }else if(pag === "Next"){
         if(recipesPage.page > buttons().length-3){
           pag = buttons().length-2
           changePages()
@@ -106,10 +110,13 @@ export default function Recipes(){
       nineRecipes(1)
     },[dietsFilter])
     ////////////////////////////////////////////////////////////////////////////////////
+    useEffect(() => {
+      console.log(recipesPage.actualyPage)
+    },[recipesPage.actualyPage])
     return(
       <>
-        {(!recipes.length && !diets.length)&&<div>Cargando...</div>}
-        {(!!recipes.length && !!diets.length)&& 
+        {!recipes.length&&<Loading/>}
+        {!!recipes.length&& 
         <div>
           <div className="buttons-order-container">
           <div className="order-left">
@@ -123,6 +130,7 @@ export default function Recipes(){
           <SelectBar/>
           </div>
           {!recipesPage.actualyPage.length&&nineRecipes(1)}
+          {recipesPage.actualyPage[0]===undefined&&<p id="recipes-not-found">No recipes were found with the {dietsFilter} diet.</p>}
           <div className="cards-conteiner">
             {recipesPage.actualyPage.map(recipe => 
              (!!recipe)&&
@@ -140,9 +148,8 @@ export default function Recipes(){
           <div className="buttons-a-container">
               {buttons().map(button => 
                 <div key={button }>
-                  <button className="button-a"onClick={()=>nineRecipes(button )}>
-                    {button }
-                  </button>
+                  {recipesPage.page !== button && <button className="button-a"onClick={()=>nineRecipes(button )}>{button }</button>}
+                {recipesPage.page === button && <button className="button-a press-button"onClick={()=>nineRecipes(button )}>{button }</button>}
                 </div>
               )}          
           </div>

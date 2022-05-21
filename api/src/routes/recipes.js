@@ -84,6 +84,11 @@ router.get("/", async (req, res, next) => {
       next(err);
     }
 })
+// if (name) {
+//   filtro = filtro.filter((e) => e.title.toLowerCase().includes(name.toLowerCase()))
+// }
+
+
 // [ ] GET /recipes/{idReceta}:
 // Obtener el detalle de una receta en particular
 // Debe traer solo los datos pedidos en la ruta de detalle de receta
@@ -103,7 +108,8 @@ router.get("/:idReceta", async (req, res, next) => {
           summary: detail.data.summary,
           score: detail.data.spoonacularScore,
           healthScore: detail.data.healthScore,
-          instructions: detail.data.instructions              
+          instructions: detail.data.instructions,
+          dishTypes: detail.data.dishTypes             
         } 
         return res.send(filterDetail);
       }
@@ -150,3 +156,4 @@ router.post("/", async (req, res, next) => {
   }
 })      
 module.exports = router;
+

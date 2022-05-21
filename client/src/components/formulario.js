@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux"
 import {useState, useEffect} from "react"
 import {addNewRecipe, getDiets} from '../store/actions'
-
+import '../css/formulario.css';
 export function validate(input) {
     let errors = {};
     if (!input.name) {
@@ -69,7 +69,8 @@ export default function  Formulario() {
     });
   }
   const [msgAlert, setMsgAlert] = useState({
-    mostrar: false
+    successfully: "",
+    alert: ""
   });
   const handleSubmit = function(e){
     e.preventDefault()   
@@ -84,12 +85,14 @@ export default function  Formulario() {
         dietsIds:[]
       });
       setMsgAlert({
-        mostrar: false
+        successfully: "si",
+        alert: "Your recipe was created successfully"
       })
       //redirigir aqui: ?????
     }else{
       setMsgAlert({
-        mostrar: true
+        successfully: "no",
+        alert:"You must correctly complete the indicated fields"
       })
     }
   }
@@ -110,53 +113,53 @@ export default function  Formulario() {
   }
   return (
   <>
-    <form onSubmit={(e) => {handleSubmit(e)}} >
+  <div id="form-all-container">
+    <div className="elegirDietaContainer">
+      <label>Select Diets Types:</label>  
+      <div id="div-p-diet-validate">{validate(input).dietsIds&& <p>{validate(input).dietsIds}</p>}</div>   
+        {diets && diets.map(diet => 
+        <div key={diet.id}>
+        {input.dietsIds.includes(diet.id)&&<button id="press-button"onClick = {()=> selectDiets(diet.id)}>{diet.name}</button>}
+        {!input.dietsIds.includes(diet.id)&&<button onClick = {()=> selectDiets(diet.id)}>{diet.name}</button>}
+        </div>
+        )}                      
+    </div>
+    <form onSubmit={(e) => {handleSubmit(e)}} className="form-container">
       <div>
         <label>Name:</label>     
-        <input type="text" name="name" value={input.name} onChange={handleInputChange} />    
-         {validate(input).name && <p className="danger">{validate(input).name}</p>}           
+        <input id="input-text2"type="text" name="name" value={input.name} onChange={handleInputChange}  placeholder="example: milanesa con pure"/>    
+         {validate(input).name && <p className="validate">{validate(input).name}</p>}           
       </div>
       <div>
         <label>summary:</label>     
-        <input type="text" name="summary" value={input.summary} onChange={handleInputChange} />
-        {validate(input).summary && <p>{validate(input).summary}</p>}                
+        <input id="input-text1"type="text" name="summary" value={input.summary} onChange={handleInputChange} placeholder="type summary recipe here..."/>
+        {validate(input).summary && <p className="validate">{validate(input).summary}</p>}                
       </div>
       <div>
         <label>score:</label>     
-        <input type="text" name="score" value={input.score} onChange={handleInputChange} />
-        {validate(input).score && <p>{validate(input).score}</p>}                  
+        <input id="input-text2"type="text" name="score" value={input.score} onChange={handleInputChange} placeholder="example: 100"/>
+        {validate(input).score && <p className="validate">{validate(input).score}</p>}                  
       </div>
       <div>
         <label>healthScore:</label>     
-        <input type="text" name="healthScore" value={input.healthScore} onChange={handleInputChange} />
-        {validate(input).healthScore && <p>{validate(input).healthScore}</p>}                  
+        <input id="input-text2"type="text" name="healthScore" value={input.healthScore} onChange={handleInputChange} placeholder="example: 100"/>
+        {validate(input).healthScore && <p className="validate">{validate(input).healthScore}</p>}                  
       </div>
       <div>
         <label>instructions:</label>     
-        <input type="text" name="instructions" value={input.instructions} onChange={handleInputChange} />
-        {validate(input).instructions && <p>{validate(input).instructions}</p>}                  
+        <input id="input-text1"type="text" name="instructions" value={input.instructions} onChange={handleInputChange} placeholder="type instructions recipe here..."/>
+        {validate(input).instructions && <p className="validate">{validate(input).instructions}</p>}                  
       </div>
-      <div>         
-      </div> 
-      <div>
-        <input type="submit" value="submit"/>
-        {msgAlert.mostrar && <p>*complete correctamente el formulario</p>} 
+      <div id="submit">
+        {(!!Object.keys(validate(input)).length)&&<input type="submit"value="Create Recipe"/>} 
+        {(!Object.keys(validate(input)).length)&&<input id="press-submit-create"type="submit"value="Create Recipe"/>}
+        {msgAlert.successfully==="si" && <p className="validate-acepted">{msgAlert.alert}</p>}
+        {msgAlert.successfully==="si" && !!setTimeout(() => {setMsgAlert({successfully: "",alert: ""})}, 4000)}
+        {msgAlert.successfully==="no" && <p className="validate-failed">{msgAlert.alert}</p>} 
+        {msgAlert.successfully==="no" && !!setTimeout(() => {setMsgAlert({successfully: "",alert: ""})}, 4000)}
       </div>
     </form>
-    <div>
-        <label>diets:</label>  
-        {validate(input).dietsIds&& <p>{validate(input).dietsIds}</p>}   
-        <ul>
-         {diets && diets.map(diet => 
-           <li key = {diet.id}> 
-             <button onClick = {()=> selectDiets(diet.id)}>  
-             {diet.name}
-             </button>
-           </li>)
-         }
-        </ul>                   
-      </div>
+  </div>
   </>   
   )
 }
-

@@ -14,11 +14,10 @@
   position: relative;
   top: 0;
   color: black;
-  background-color: rgb(224, 255, 47);
-  opacity: 0.7;
+  background-color: rgba(255, 179, 0, 0.5);
   border-width: 1px;
   border-style: solid;
-  border-color: rgb(128, 87, 0);
+  border-color: black;
 }
 .icon-container{
   left: 75%;
@@ -46,12 +45,10 @@
 }
 .diets-container li{
   list-style:none;
-  background-color: rgb(224, 255, 47);
-  opacity: 0.7;
-  border-radius: 10px;
+  background-color: rgba(255, 179, 0, 0.5);
   border-width: 1px;
   border-style: solid;
-  border-color: rgb(128, 87, 0);
+  border-color: black;
   color: black
 }
 

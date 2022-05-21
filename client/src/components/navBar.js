@@ -1,11 +1,13 @@
 import '../css/navBar.css';
 import React from 'react';
-import {NavLink} from 'react-router-dom';
-export default function NavBar(){    
+import {NavLink, useParams} from 'react-router-dom';
 
+export default function NavBar(){    
+  const  params  = useParams();
+  console.log(params);
   return( 
     <nav className="nav-container">
-      <h1><button><NavLink className="link"to="/" >Home</NavLink></button></h1>
+      <NavLink className="link"to="/home"><h1><button>Home</button></h1></NavLink>
     </nav>
   )
 }
