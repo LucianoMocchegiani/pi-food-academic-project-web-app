@@ -8,7 +8,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;  
-  background-color: rgba(246, 161, 2, 0.65);
+  background-color: rgba(82, 53, 8, 0.8);;
   padding: 7px 0px;
   border-radius: 10px;
   border-width: 2px;
@@ -33,12 +33,13 @@
 .button-a:hover{
   border-color: orange;
 }
+/* rgba(246, 161, 2, 0.65) */
 .buttons-order-container{
   border-radius: 10px;
   border-width: 2px;
   border-style: solid;
   border-color: orange;
-  background-color: rgba(246, 161, 2, 0.65);
+  background-color: rgba(82, 53, 8, 0.8);
 }
 .order-left{
   display: block;

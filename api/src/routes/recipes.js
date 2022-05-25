@@ -7,9 +7,8 @@ const {
   API_KEY,
 } = process.env;
 
-// [ ] GET /recipes?name="...":
-// Obtener un listado de las recetas que contengan la palabra ingresada como query parameter
-// Si no existe ninguna receta mostrar un mensaje adecuado
+
+
 router.get("/", async (req, res, next) => {
   const{name} = req.query;
     try{
@@ -89,10 +88,7 @@ router.get("/", async (req, res, next) => {
 // }
 
 
-// [ ] GET /recipes/{idReceta}:
-// Obtener el detalle de una receta en particular
-// Debe traer solo los datos pedidos en la ruta de detalle de receta
-// Incluir los tipos de dieta asociados
+
 router.get("/:idReceta", async (req, res, next) => {
   const{idReceta} = req.params;
     try{
@@ -140,10 +136,14 @@ router.get("/:idReceta", async (req, res, next) => {
       next(err);
     }
 });
-// Recibe los datos recolectados desde el formulario controlado de la ruta de creación de recetas por body
-// Crea una receta en la base de datos
+
+
+
+
 router.post("/", async (req, res, next) => {
+
   const {name, summary, score, healthScore, instructions, dietsIds} = req.body;
+  
   try{
     const newRecipe = await Recipe.create({name, summary, score, healthScore, instructions})
     for (let i = 0 ; i < dietsIds.length ; i++){
@@ -156,4 +156,5 @@ router.post("/", async (req, res, next) => {
   }
 })      
 module.exports = router;
+
 

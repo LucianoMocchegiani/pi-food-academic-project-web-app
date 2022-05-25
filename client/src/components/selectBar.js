@@ -57,12 +57,20 @@ export default function SelectBar(){
     });
   }
   const find=()=>{
-    dispatch(resetError())
-    dispatch(getByFind(input.find))
-    setInput({
-      ...input,
-      find : ""
-    });
+    if(!input.find){
+      dispatch(resetError())
+      dispatch(getByFind("*nada_con_este_nombre*"))
+      return
+    }
+    else{
+      dispatch(resetError())
+      dispatch(getByFind(input.find))
+      setInput({
+        ...input,
+        find : ""
+      });
+    }
+  
   }
  
   ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -97,4 +105,3 @@ export default function SelectBar(){
   )
 }
 
-// {!!error.length&& setTimeout(() => {dispatch(resetError())}, 3000)}

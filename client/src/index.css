@@ -5,8 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url("https://img.freepik.com/foto-gratis/ingredientes-comida-italiana_23-2148551669.jpg?w=2000");
-
+  background-image: url("../src/img/fondo2.jpg");
+  background-size: cover;
+  
 }
 
 code {

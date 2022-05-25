@@ -2,3 +2,16 @@
     height: 400px;
     background-color: rgba(0, 0, 0, 0.85);
 }
+#loading-cotainer h1{
+    position : absolute;
+    top:5%;
+    font-size:25px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 35%;
+    text-align: center;
+    border-radius: 10px;
+    border-width: 3px;
+    border-style: solid;
+    background-color: rgba(246, 132, 2, 0.65)
+  }

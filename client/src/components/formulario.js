@@ -88,7 +88,6 @@ export default function  Formulario() {
         successfully: "si",
         alert: "Your recipe was created successfully"
       })
-      //redirigir aqui: ?????
     }else{
       setMsgAlert({
         successfully: "no",
