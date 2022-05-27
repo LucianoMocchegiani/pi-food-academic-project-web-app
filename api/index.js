@@ -19,6 +19,7 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn, Diet } = require('./src/db.js');
+require('dotenv').config();
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
@@ -31,4 +32,8 @@ conn.sync({ force: true }).then(() => {
       Diet.create({name: dietas[i] }) }
   });
 });
-
+//va abajo de liscencias en package.json
+// "engines": {
+//   "node": ">=12.18.3",
+//   "npm": ">=6.14.6"
+// },
