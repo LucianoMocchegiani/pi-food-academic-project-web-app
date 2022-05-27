@@ -22,7 +22,7 @@ const { conn, Diet } = require('./src/db.js');
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
-  server.listen(3001, () => {
+  server.listen(process.env.PORT, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
     const dietas = ["gluten free","ketogenic","vegetarian","lacto ovo vegetarian",
     "vegan","pescatarian","paleolithic", "primal","fodmap friendly","whole 30","dairy free"]
