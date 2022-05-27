@@ -19,11 +19,14 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn, Diet } = require('./src/db.js');
-require('dotenv').config();
+const {
+  PORT,
+} = process.env;
+
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
-  server.listen(process.env.PORT, () => {
+  server.listen(PORT, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
     const dietas = ["gluten free","ketogenic","vegetarian","lacto ovo vegetarian",
     "vegan","pescatarian","paleolithic", "primal","fodmap friendly","whole 30","dairy free"]
