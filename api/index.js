@@ -26,7 +26,7 @@ const {
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
-  server.listen(PORT, () => {
+  server.listen(PORT, '0.0.0.0', () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
     const dietas = ["gluten free","ketogenic","vegetarian","lacto ovo vegetarian",
     "vegan","pescatarian","paleolithic", "primal","fodmap friendly","whole 30","dairy free"]
@@ -35,8 +35,3 @@ conn.sync({ force: true }).then(() => {
       Diet.create({name: dietas[i] }) }
   });
 });
-//va abajo de liscencias en package.json
-// "engines": {
-//   "node": ">=12.18.3",
-//   "npm": ">=6.14.6"
-// },
