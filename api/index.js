@@ -26,9 +26,9 @@ const {
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
-  console.log("aca llega")
+
   server.listen(PORT, '0.0.0.0', () => {
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
+    console.log('%s listening at '+PORT); // eslint-disable-line no-console
     const dietas = ["gluten free","ketogenic","vegetarian","lacto ovo vegetarian",
     "vegan","pescatarian","paleolithic", "primal","fodmap friendly","whole 30","dairy free"]
     // crear dietas en la base de datos

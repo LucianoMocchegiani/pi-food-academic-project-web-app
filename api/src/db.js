@@ -26,7 +26,7 @@ process.env.NODE_ENV ==="production"?
       },
       ssl: true,
     }
-  }): new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/food`, {
+  }): new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`, {
     logging: false, // set to console.log to see the raw SQL queries
     native: false, // lets Sequelize know we can use pg-native for ~30% more speed
   });
@@ -57,7 +57,7 @@ const { Recipe,Diet} = sequelize.models;
 Recipe.belongsToMany(Diet,{through: "Recipes&Diets"})
 Diet.belongsToMany(Recipe,{through: "Recipes&Diets"})
 
-Diet.create({name:"Ketogenic"})
+// Diet.create({name:"Ketogenic"})
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

@@ -8,10 +8,10 @@ export const GET_BY_FIND ='GET_BY_FIND';
 export const RESET_RECIPE_DETAIL = 'RESET_RECIPE_DETAIL';
 export const ERROR = 'ERROR';
 export const RESET_ERROR  = 'RESET_ERROR';
-
+const { REACT_APP_API } = process.env
 export const getRecipes = ()=> {
     return function(dispatch) {
-        axios.get("http://localhost:3001/api/recipes")
+        axios.get(REACT_APP_API+"/api/recipes")
         .then(response => {
             dispatch({
                 type: GET_RECIPES,
@@ -24,7 +24,7 @@ export const getRecipes = ()=> {
 
 export const getRecipeDetail = (id)=> {
     return function(dispatch) {
-        axios.get("http://localhost:3001/api/recipes/"+id)
+        axios.get(REACT_APP_API+"/api/recipes/"+id)
         .then(response => {
             dispatch({
                 type: GET_RECIPE_DETAIL,
@@ -47,7 +47,7 @@ export const resetRecipeDetail = ()=> {
 
 export const getDiets = ()=> {
     return function(dispatch) {
-        axios.get("http://localhost:3001/api/types")
+        axios.get(REACT_APP_API+"/api/types")
         .then(response => {
             dispatch({
                 type: GET_DIETS,
@@ -61,7 +61,7 @@ export const getDiets = ()=> {
 
 export const addNewRecipe = (input)=> {
     return function(dispatch) {
-       axios.post("http://localhost:3001/api/recipes", input)
+       axios.post(REACT_APP_API+"/api/recipes", input)
         .then(response => {
             dispatch({
               type: ADD_NEW_RECIPE,
@@ -81,7 +81,7 @@ export const orderBy = (recipes)=> {
 
 export const getByFind = (name)=> {
     return function(dispatch){
-        axios.get("http://localhost:3001/api/recipes?name="+name)
+        axios.get(REACT_APP_API+"/api/recipes?name="+name)
         .then(response => {
             dispatch({
                 type: GET_BY_FIND,
