@@ -25,7 +25,6 @@ process.env.NODE_ENV ==="production"?
         require: true,
         rejectUnauthorized: false,
       },
-      ssl: true,
     }
   }): new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`, {
     logging: false, // set to console.log to see the raw SQL queries
