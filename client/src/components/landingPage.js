@@ -1,13 +1,15 @@
 import React from "react"
 import '../css/landingPage.css';
-import Flecha from '../img/flecha3.png'
 
 export default function  LandingPage() {
     return(
+        <>
         <div className="landingPage-container" id="div-landingPage">
-            
-            <div><h2>Click on home</h2></div>
-            <div><h1>PI FOOD</h1></div>
+            <div><h1>FOOD RECIPES</h1></div>
+            <div><p>Crea, busca y encuentra las recetas de comida que se adapten a tus gustos!!</p></div>
         </div>
+        <div className="landingPage-container" >
+        </div>
+        </>
     )
 }

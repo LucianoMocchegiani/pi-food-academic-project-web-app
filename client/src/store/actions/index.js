@@ -11,7 +11,7 @@ export const RESET_ERROR  = 'RESET_ERROR';
 const { REACT_APP_API } = process.env
 export const getRecipes = ()=> {
     return function(dispatch) {
-        axios.get(REACT_APP_API+"/api/recipes")
+        axios.get(`${REACT_APP_API}/api/recipes`)
         .then(response => {
             dispatch({
                 type: GET_RECIPES,
@@ -24,7 +24,7 @@ export const getRecipes = ()=> {
 
 export const getRecipeDetail = (id)=> {
     return function(dispatch) {
-        axios.get(REACT_APP_API+"/api/recipes/"+id)
+        axios.get(`${REACT_APP_API}/api/recipes/${id}`)
         .then(response => {
             dispatch({
                 type: GET_RECIPE_DETAIL,
@@ -47,8 +47,9 @@ export const resetRecipeDetail = ()=> {
 
 export const getDiets = ()=> {
     return function(dispatch) {
-        axios.get(REACT_APP_API+"/api/types")
+        axios.get(`${REACT_APP_API}/api/types`)
         .then(response => {
+            console.log(response.data)
             dispatch({
                 type: GET_DIETS,
                 payload: response.data
@@ -60,8 +61,9 @@ export const getDiets = ()=> {
 }
 
 export const addNewRecipe = (input)=> {
+    console.log(input)
     return function(dispatch) {
-       axios.post(REACT_APP_API+"/api/recipes", input)
+       axios.post(`${REACT_APP_API}/api/recipes`, input)
         .then(response => {
             dispatch({
               type: ADD_NEW_RECIPE,
@@ -81,7 +83,7 @@ export const orderBy = (recipes)=> {
 
 export const getByFind = (name)=> {
     return function(dispatch){
-        axios.get(REACT_APP_API+"/api/recipes?name="+name)
+        axios.get(`${REACT_APP_API}/api/recipes/?name=${name}`)
         .then(response => {
             dispatch({
                 type: GET_BY_FIND,

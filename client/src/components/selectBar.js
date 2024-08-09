@@ -1,8 +1,7 @@
 import {useDispatch, useSelector} from "react-redux"
-import {useEffect, useState,} from "react"
+import {useState} from "react"
 import {orderBy, getByFind, resetError} from '../store/actions'
 import React from 'react';
-import {NavLink} from 'react-router-dom';
 
 export default function SelectBar(){    
   const dispatch = useDispatch()
@@ -12,7 +11,7 @@ export default function SelectBar(){
   const Desc =(arrayDeObj,atribute)=>{
     let arrayObj =  arrayDeObj.sort(function (a, b) {
       if (a[atribute] < b[atribute] ) {
-        return 1;
+        return 1; 
       }
       if (a[atribute] > b[atribute]) {
         return -1;
@@ -74,16 +73,15 @@ export default function SelectBar(){
   }
  
   ////////////////////////////////////////////////////////////////////////////////////////////////
-  return( 
-    <div>
-       <div className="order-right">
-       <NavLink className="link"to="/home/new"><button className="button-a">Create new recipe</button></NavLink>
-        <button className="button-a"onClick = {()=>find()}>Find Recipe</button>
-        {error[1]==="Error Find"&&<p id="find-not-found">No results were found for your search.</p>}
-        {error[1]==="Error Find"&& !!setTimeout(() => {dispatch(resetError())}, 4000)}
-        <input className="input-a"type="text" name="name" value={input.find} onChange={(e)=>handleInputChange(e)} placeholder="Search recipes..."/>
-      </div>
-        <div className="order-left">
+  return(   
+    <>
+      <div className="button-label-container">
+            <button className="button-a"onClick = {()=>find()}>Find Recipe</button>
+            {error[1]==="Error Find"&&<p id="find-not-found">No results were found for your search.</p>}
+            {error[1]==="Error Find"&& !!setTimeout(() => {dispatch(resetError())}, 4000)}
+            <input className="input-a"type="text" name="name" value={input.find} onChange={(e)=>handleInputChange(e)} placeholder="Search recipes..."/>
+        </div>
+        <div className="button-label-container">
           <label className="label">Order by HealthScore:</label>
           {orderPress.healthScore === "Desc"&&<button className="button-a press-button"onClick = {()=>changeOrder("healthScore","Desc",Desc)}>Highest</button>}
           {orderPress.healthScore === "Desc"&&<button className="button-a"onClick = {()=>changeOrder("healthScore","Asc",Asc)}>Lowest</button>}
@@ -92,7 +90,7 @@ export default function SelectBar(){
           {orderPress.healthScore === ""&&<button className="button-a"onClick = {()=>changeOrder("healthScore","Desc",Desc)}>Highest</button>}
           {orderPress.healthScore === ""&&<button className="button-a"onClick = {()=>changeOrder("healthScore","Asc",Asc)}>Lowest</button>}
         </div>                                       
-        <div className="order-left">
+        <div className="button-label-container">
           <label className="label">Order by Name:</label>
           {orderPress.name === "Desc"&& <button className="button-a press-button"onClick = {()=>changeOrder("name","Desc",Desc)}>Z-A</button>}
           {orderPress.name === "Desc"&& <button className="button-a"onClick = {()=>changeOrder("name","Asc",Asc)}>A-Z</button>}
@@ -101,7 +99,7 @@ export default function SelectBar(){
           {orderPress.name === ""&&<button className="button-a"onClick = {()=>changeOrder("name","Desc",Desc)}>Z-A</button>}
           {orderPress.name === ""&&<button className="button-a"onClick = {()=>changeOrder("name","Asc",Asc)}>A-Z</button>}
         </div>        
-    </div>
+    </>
   )
 }
 

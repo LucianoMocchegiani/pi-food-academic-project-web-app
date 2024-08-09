@@ -1,13 +1,14 @@
 .landingPage-container{
     width: 100%;
-    height: 260px;
+    height: 100vh;
     background-color: transparent;
     display: flex;
-    align-content: space-around;
     flex-wrap: wrap;
+    align-content: start;
     justify-content: center;  
     position: relative;
     background-color:transparent;
+    background-color: rgba(0, 0, 0, 0.75);
 }
 .landingPage-container div{
     display: flex;
@@ -18,8 +19,6 @@
     height: 20%;
 }
 .landingPage-container h1{   
-    position : absolute;
-    top:35%;
     font-size:50px;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -28,15 +27,27 @@
     border-radius: 10px;
     border-width: 3px;
     border-style: solid;
+    color: white;
    
 }
 .landingPage-container h2{  
-    position : absolute;
-    top: 13%;
     font-size:22px;
     padding-top: 20px;
     padding-bottom: 20px;
-    margin-bottom: 20px; 
+    width: 30%;
+    text-align: center;
+    border-radius: 10px;
+    border-width: 3px;
+    border-style: solid;
+    color: white;
+    
+}
+.landingPage-container p{  
+    font-size:22px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 80px;
+    color: white;
     width: 30%;
     text-align: center;
     border-radius: 10px;
@@ -44,6 +55,18 @@
     border-style: solid;
     
 }
-#div-landingPage{
-    height: 400px;
-}
+@media (max-width: 1010px) {
+    .landingPage-container p{
+        font-size:22px;
+        width: 60%;
+    }
+    .landingPage-container h1{
+        font-size:22px;
+        width: 60%;
+    }
+    .landingPage-container h2{
+        font-size:22px;
+        width: 60%;
+    }
+  
+  }

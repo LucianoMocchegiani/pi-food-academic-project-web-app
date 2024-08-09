@@ -5,7 +5,6 @@ import {getRecipes, getDiets} from '../store/actions'
 import CardRecipe from '../components/cardRecipe'
 import SelectBar from '../components/selectBar'
 import Loading from '../components/loading'
-import NotFoundError from '../components/404'
 import '../css/recipes.css';
 
 
@@ -115,19 +114,18 @@ export default function Recipes(){
     },[recipesPage.actualyPage])
     return(
       <>
-        {!recipes.length&&<Loading/>}
-        {!!recipes.length&& 
-        <div>
-          <div className="buttons-order-container">
-          <div className="order-left">
+        {!recipes?<Loading/>:
+        <>
+          <div id="select-bar">
+            <SelectBar/>
+          <div className='button-label-container'>
             <label className="label">Filter by Diet </label>
             <select className="button-a" name="diets" id="diets" onChange={(e)=>dietFilterChange(e)}>
               <option key="Any" value={"Any"} >Any</option>
               {diets.map(diet=> 
               <option key={diet.name} value={diet.name}>{diet.name}</option>)}
             </select>
-          </div>
-          <SelectBar/>
+          </div>  
           </div>
           {!recipesPage.actualyPage.length&&nineRecipes(1)}
           {recipesPage.actualyPage[0]===undefined&&<p id="recipes-not-found">No recipes were found with the {dietsFilter} diet.</p>}
@@ -153,7 +151,7 @@ export default function Recipes(){
                 </div>
               )}          
           </div>
-        </div>}
+        </>}
       </>
     );
 }

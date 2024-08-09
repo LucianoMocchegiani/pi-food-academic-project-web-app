@@ -21,7 +21,6 @@
   color: white;
   padding: 15px 29px;
   text-align: center;
-  display: inline-block;
   font-size: 15px;
   margin: 2px 1em 0 auto;
   cursor: pointer;
@@ -30,32 +29,36 @@
   border-style: solid;
   border-color: black;
 }
+.button-label-container{
+  width:45%;
+  margin-top: 20px;
+  margin-bottom: 20px ;
+  justify-content: center;
+  align-items: center;
+  
+}
 .button-a:hover{
   border-color: orange;
 }
 /* rgba(246, 161, 2, 0.65) */
-.buttons-order-container{
+#select-bar{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
   border-radius: 10px;
   border-width: 2px;
   border-style: solid;
   border-color: orange;
   background-color: rgba(82, 53, 8, 0.8);
-}
-.order-left{
-  display: block;
-  padding: 7px 0px;
-}
-.order-right{
-  float: right;
-  display: flex;  
-  padding: 10px 29px;
+  justify-content: center;
+  align-items: center;
+
 }
 .input-a{
   background-color: white; 
   border: none;
   padding: 15px 29px;
   text-align: center;
-  display: inline-block;
   font-size: 15px;
   margin: 2px 1em 0 auto;
   cursor: pointer;
@@ -66,7 +69,6 @@
   color: white;
   padding: 7px 0px;
   text-align: center;
-  display: inline-block;
   font-size: 24px;
   margin: 2px 1em 0 auto;
   text-shadow: 1px 1px 2px black;
@@ -95,4 +97,16 @@
 }
 .linkcard:hover{
   background-color:orange
+}
+@media (max-width: 600px) {
+  .button-label-container {
+    width: 100%;
+  }
+  .label{
+    font-size: 18px;
+  }
+  .button-a{
+    padding: 5px 10px;
+  }
+
 }
